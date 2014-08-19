@@ -48,11 +48,13 @@ func (*Control) Quit() {
 	os.Exit(0)
 }
 func (c *Control) Search(s string) {
-	res := NewSearch(s).results
+	search := NewSearch(s)
+	Len := search.Len
+	results := search.results
 	c.Searchresult.Len = 0
 	qml.Changed(&c.Searchresult, &c.Searchresult.Len)
-	c.Searchresult.Len = len(res)
-	c.Searchresult.results = res
+	c.Searchresult.Len = Len
+	c.Searchresult.results = results
 	qml.Changed(&c.Searchresult, &c.Searchresult.Len)
 }
 
@@ -60,8 +62,8 @@ func NewSearch(s string) Searchresult {
 	cmd := exec.Command("locate", s)
 	out, _ := cmd.Output()
 	var sr Searchresult
-	sr.Len = len(out)
 	sr.results = strings.Split(string(out), "\n")
+	sr.Len = len(sr.results)
 	return sr
 }
 

@@ -29,8 +29,8 @@ ApplicationWindow {
         }
         ListView {
             y: 14
-            height: parent.height-y
-            width: parent.width
+            height: 20
+            width: 300
             model: ctrl.searchresult.len
             delegate: Rectangle {
                 height: 14
