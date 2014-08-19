@@ -66,5 +66,13 @@ func NewSearch(s string) Searchresult {
 	sr.Len = len(sr.results)
 	return sr
 }
+func (*Control) Select(s string) {
+	fmt.Println(s)
+	err := exec.Command("xdg-open", s).Run()
+	if err != nil {
+		panic(err)
+	}
+
+}
 
 // func (c *Control) Len(s string) *Searchresult {

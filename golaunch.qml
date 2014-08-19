@@ -33,12 +33,14 @@ ApplicationWindow {
             width: 300
             model: ctrl.searchresult.len
             delegate: Rectangle {
-                height: 14
+                height: 30
+                color:"#404040"
                 Text {
+                    id: sresult
                     text: ctrl.searchresult.text(index)
                     MouseArea {
                         anchors.fill : parent
-                        onClicked: ctrl.select(index)
+                        onClicked: ctrl.select(sresult.text)
                     }
                 }
             }
