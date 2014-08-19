@@ -2,8 +2,8 @@ import QtQuick 2.1
 import QtQuick.Controls 1.0
 
 ApplicationWindow {
-    width: 300
-    height: 100
+    width: 800
+    height: 300
     Action {
         id: quitAction
         text: "&Quit"
@@ -14,6 +14,7 @@ ApplicationWindow {
     Column {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
+        anchors.fill: parent
         spacing: 8
         Text {
             text: "Enter Search Term"
@@ -29,12 +30,15 @@ ApplicationWindow {
         }
         ListView {
             y: 14
-            height: 20
-            width: 300
+            height: 200
+            spacing: 4
+            width: parent.width
             model: ctrl.searchresult.len
             delegate: Rectangle {
-                height: 30
-                color:"#404040"
+                width:parent.width
+                height:30 
+                border.color: "black"
+                color:"#e2e2e2"
                 Text {
                     id: sresult
                     text: ctrl.searchresult.text(index)

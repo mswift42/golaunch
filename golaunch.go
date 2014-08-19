@@ -48,11 +48,11 @@ func (*Control) Quit() {
 	os.Exit(0)
 }
 func (c *Control) Search(s string) {
-	search := NewSearch(s)
-	Len := search.Len
-	results := search.results
 	c.Searchresult.Len = 0
+	search := NewSearch(s)
+	results := search.results
 	qml.Changed(&c.Searchresult, &c.Searchresult.Len)
+	Len := search.Len
 	c.Searchresult.Len = Len
 	c.Searchresult.results = results
 	qml.Changed(&c.Searchresult, &c.Searchresult.Len)
@@ -67,7 +67,6 @@ func NewSearch(s string) Searchresult {
 	return sr
 }
 func (*Control) Select(s string) {
-	fmt.Println(s)
 	err := exec.Command("xdg-open", s).Run()
 	if err != nil {
 		panic(err)
