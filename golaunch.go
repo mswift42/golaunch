@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path"
 	"strings"
 
 	"gopkg.in/qml.v0"
@@ -59,7 +60,7 @@ func (c *Control) Search(s string) {
 }
 
 func NewSearch(s string) Searchresult {
-	cmd := exec.Command("locate", s)
+	cmd := exec.Command("locate", "-l", "10", "-i", s)
 	out, _ := cmd.Output()
 	var sr Searchresult
 	sr.results = strings.Split(string(out), "\n")
@@ -72,6 +73,10 @@ func (*Control) Select(s string) {
 		panic(err)
 	}
 
+}
+func getFileFromPath(s string) string {
+	_, file := path.Split(s)
+	return strings.Split(file, ".")[0]
 }
 
 // func (c *Control) Len(s string) *Searchresult {

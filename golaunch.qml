@@ -1,7 +1,7 @@
 import QtQuick 2.1
 import QtQuick.Controls 1.0
 
-ApplicationWindow {
+Item {
     width: 800
     height: 300
     Action {
@@ -15,7 +15,7 @@ ApplicationWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         anchors.fill: parent
-        spacing: 8
+        // spacing: 8
         Text {
             text: "Enter Search Term"
             color: "#222222"
@@ -31,24 +31,26 @@ ApplicationWindow {
         ListView {
             y: 14
             height: 200
+            highlightRangeMode: ItemView.ApplyRange
             spacing: 4
             width: parent.width
             model: ctrl.searchresult.len
             delegate: Rectangle {
                 width:parent.width
                 height:30 
-                border.color: "black"
+                border.color: "#d0d0d0"
                 color:"#e2e2e2"
-                Text {
-                    id: sresult
-                    text: ctrl.searchresult.text(index)
-                    MouseArea {
-                        anchors.fill : parent
-                        onClicked: ctrl.select(sresult.text)
+                Column {
+                    Text {
+                        id: sresult
+                        text: ctrl.searchresult.text(index)
+                        MouseArea {
+                            anchors.fill : parent
+                            onClicked: ctrl.select(sresult.text)
+                        }
                     }
                 }
             }
-
         }
     }
-    }
+}
