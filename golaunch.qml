@@ -41,12 +41,20 @@ Item {
                 border.color: "#d0d0d0"
                 color:"#e2e2e2"
                 Column {
-                    Text {
-                        id: sresult
-                        text: ctrl.searchresult.text(index)
-                        MouseArea {
-                            anchors.fill : parent
-                            onClicked: ctrl.select(sresult.text)
+                    Row {
+                        Text {
+                            id: sresultname
+                            text: ctrl.searchresult.name(index)
+                            Row {
+                                Text {
+                                    id: sresult
+                                    text: ctrl.searchresult.path(index)
+                                    MouseArea {
+                                        anchors.fill : parent
+                                        onClicked: ctrl.select(sresult.text)
+                                    }
+                                }
+                            }
                         }
                     }
                 }

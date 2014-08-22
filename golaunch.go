@@ -36,13 +36,21 @@ type Control struct {
 	Searchresult Searchresult
 }
 
-type Searchresult struct {
-	Len     int
-	results []string
+type Result struct {
+	FullPath string
+	Name     string
 }
 
-func (sr *Searchresult) Text(i int) string {
-	return sr.results[i]
+type Searchresult struct {
+	Len     int
+	results []Result
+}
+
+func (sr *Searchresult) Path(i int) string {
+	return sr.results[i].FullPath
+}
+func (sr *Searchresult) Name(i int) string {
+	return sr.results[i].Name
 }
 
 func (*Control) Quit() {
@@ -63,9 +71,19 @@ func NewSearch(s string) Searchresult {
 	cmd := exec.Command("locate", "-l", "10", "-i", s)
 	out, _ := cmd.Output()
 	var sr Searchresult
-	sr.results = strings.Split(string(out), "\n")
+	split := strings.Split(string(out), "\n")
+	sr.results = NewResults(split)
 	sr.Len = len(sr.results)
 	return sr
+}
+func NewResults(s []string) []Result {
+	length := len(s)
+	results := make([]Result, length)
+	for i, j := range s {
+		results[i].FullPath = j
+		results[i].Name = getFileFromPath(j)
+	}
+	return results
 }
 func (*Control) Select(s string) {
 	err := exec.Command("xdg-open", s).Run()
