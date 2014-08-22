@@ -42,19 +42,19 @@ Item {
                 color:"#e2e2e2"
                 Column {
                     Row {
+                        spacing:80
+                        layoutDirection:Qt.RightToLeft
                         Text {
                             id: sresultname
                             text: ctrl.searchresult.name(index)
-                            Row {
-                                Text {
-                                    id: sresult
-                                    text: ctrl.searchresult.path(index)
-                                    MouseArea {
-                                        anchors.fill : parent
-                                        onClicked: ctrl.select(sresult.text)
-                                    }
-                                }
+                            MouseArea {
+                                anchors.fill : parent
+                                onClicked: ctrl.select(sresult.text)
                             }
+                        }
+                        Text {
+                            id: sresult
+                            text: ctrl.searchresult.path(index)
                         }
                     }
                 }
