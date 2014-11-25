@@ -68,13 +68,40 @@ func (c *Control) Search(s string) {
 }
 
 func NewSearch(s string) Searchresult {
-	cmd := exec.Command("locate", "-l", "10", "-i", s)
+	cmd := exec.Command("locate", "-l", "20", "-b", "-i", s)
 	out, _ := cmd.Output()
 	var sr Searchresult
 	split := strings.Split(string(out), "\n")
 	sr.results = NewResults(split)
+	find, _ := NewSearchFind(s)
+	sr.results = append(sr.results, find.results...)
 	sr.Len = len(sr.results)
 	return sr
+}
+
+// NewSearchFind - takes an searchstring s and uses 'find' to
+// search in all the main bookmarked Folders for s.
+// if no error is invoked by executing the command, it returns
+// a Searchresult with the results.
+func NewSearchFind(s string) (Searchresult, error) {
+	places := []string{"Documents", "Downloads", "Music", "Pictures",
+		"Videos"}
+	findcmd := func(loc, value string) *exec.Cmd {
+		return exec.Command("find", "/"+loc, "*"+value+"*")
+	}
+	result := make([]byte, 0)
+	for _, i := range places {
+		out, err := findcmd(i, s).Output()
+		if err != nil {
+			return Searchresult{}, err
+		}
+		result = append(result, out...)
+	}
+	split := strings.Split(string(result), "\n")
+	var sr Searchresult
+	sr.results = NewResults(split)
+	sr.Len = len(sr.results)
+	return sr, nil
 }
 func NewResults(s []string) []Result {
 	length := len(s)
@@ -96,5 +123,3 @@ func getFileFromPath(s string) string {
 	_, file := path.Split(s)
 	return strings.Split(file, ".")[0]
 }
-
-// func (c *Control) Len(s string) *Searchresult {
