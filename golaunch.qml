@@ -26,12 +26,14 @@ Item {
         TextField {
             onAccepted: ctrl.search(text)
             id: textInput1
+            width: 300
             focus: true
         }
         ListView {
             y: 14
-            height: 200
-            highlightRangeMode: ItemView.ApplyRange
+            height: 260
+            boundsBehavior: Flickable.DragAndOvershootBounds
+            highlightRangeMode: ListView.ApplyRange
             spacing: 4
             width: parent.width
             model: ctrl.searchresult.len
@@ -44,21 +46,28 @@ Item {
                     Row {
                         spacing:80
                         layoutDirection:Qt.RightToLeft
-                        Text {
-                            id: sresultname
-                            text: ctrl.searchresult.name(index)
-                            MouseArea {
-                                anchors.fill : parent
-                                onClicked: ctrl.select(sresult.text)
-                            }
+                            Text {
+                                id: sresultname
+                                text: ctrl.searchresult.name(index)
+                                MouseArea {
+                                    anchors.fill : parent
+                                    onClicked: ctrl.select(sresult.text)
+                                }
                         }
-                        Text {
-                            id: sresult
-                            text: ctrl.searchresult.path(index)
+                            Text {
+                                id: sresult
+                                text: ctrl.searchresult.path(index)
+                                anchors.rightMargin: 10
+                                MouseArea {
+                                    anchors.fill : parent
+                                    onClicked: ctrl.select(sresult.text)
+                                }
                         }
                     }
                 }
             }
+
         }
+
     }
 }
