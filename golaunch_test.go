@@ -28,5 +28,6 @@ func TestNewSearchFind(t *testing.T) {
 		if !strings.Contains(i.Name, "Sportschau") {
 			t.Errorf("expected lisp got nil")
 		}
+
 	}
 }

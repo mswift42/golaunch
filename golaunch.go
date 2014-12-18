@@ -7,18 +7,17 @@ import (
 	"path"
 	"strings"
 
-	"gopkg.in/qml.v0"
+	"gopkg.in/qml.v1"
 )
 
 func main() {
-	if err := run(); err != nil {
+	if err := qml.Run(run); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v\n", err)
 		os.Exit(1)
 	}
 }
 
 func run() error {
-	qml.Init(nil)
 	engine := qml.NewEngine()
 	var ctrl Control
 	engine.Context().SetVar("ctrl", &ctrl)
